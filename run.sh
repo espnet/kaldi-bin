@@ -10,7 +10,8 @@ git clone https://github.com/kaldi-asr/kaldi
     (
 	cd tools
 	./extras/check_dependencies.sh
-	./extras/install_openblas.sh
+	# ./extras/install_openblas.sh
+	sudo ./extras/install_mkl.sh
 	make -j
     )
     (
