@@ -1,0 +1,6 @@
+*
+
+!.circleci/
+!.circleci/config.yml
+!run.sh
+!.gitignore
