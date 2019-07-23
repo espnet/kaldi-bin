@@ -2,6 +2,7 @@
 
 set -eu -o pipefail
 
+dst=$1
 echo "=== build kaldi ==="
 git clone https://github.com/kaldi-asr/kaldi
 (
@@ -18,7 +19,8 @@ git clone https://github.com/kaldi-asr/kaldi
 	cd src
 	./configure --static --use-cuda=no # --mathlib=OPENBLAS
 	make -j4 depend
+	cd featbin
+	make -j4
     )
 )
 
-echo "=== copy bins ==="
