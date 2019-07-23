@@ -33,7 +33,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: sudo apt-get install -qq -y g++ sox
+      - run: sudo apt-get install -qq -y g++ sox python3
       - run: ./run.sh
       - run: cp -r ./kaldi/src/featbin .
       - run: rm featbin/*.cc featbin/*.o
@@ -47,7 +47,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: sudo apt-get install -qq -y g++ sox unzip bzip2 wget curl
+      - run: apt-get install -qq -y g++ sox unzip bzip2 wget curl sudo
       - run: ./run.sh
       - run: cp -r ./kaldi/src/featbin .
       - run: rm featbin/*.cc featbin/*.o
@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y git centos-release-scl cmake libsndfile make bzip2 wget which unzip
+            yum install -y git centos-release-scl make bzip2 wget which unzip zlib-devel automake autoconf patch sox libtool subversion python3
             yum-config-manager --enable rhel-server-rhscl-7-rpms
             yum install -y devtoolset-7-gcc-c++
       - checkout
