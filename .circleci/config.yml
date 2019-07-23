@@ -20,11 +20,8 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-          name: build
-          command: |
-            sudo apt-get install -qq -y g++- sox
-            ./run.sh
+      - run: sudo apt-get install -qq -y g++ sox
+      - run: ./run.sh
       - store_artifacts:
           path: kaldi/src/featbin
   # test-ubuntu16:
