@@ -21,10 +21,10 @@ jobs:
     steps:
       - checkout
       - run:
-        name: build
-        command: |
-          sudo apt-get install -qq -y g++- sox
-          ./run.sh
+          name: build
+          command: |
+            sudo apt-get install -qq -y g++- sox
+            ./run.sh
       - store_artifacts:
           path: kaldi/src/featbin
   # test-ubuntu16:
