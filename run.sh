@@ -16,7 +16,7 @@ git clone https://github.com/kaldi-asr/kaldi
     )
     (
 	cd src
-	./configure --static --use-cuda=no --mathlib=OPENBLAS
+	./configure --static --use-cuda=no # --mathlib=OPENBLAS
 	make -j4 depend
     )
 )
