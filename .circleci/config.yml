@@ -7,11 +7,10 @@ workflows:
   version: 2
   test:
     jobs:
-      # TODO(karita): support tests without conda
       - test-ubuntu18
-      # - test-ubuntu16
-      # - test-centos7
-      # - test-debian9
+      - test-ubuntu16
+      - test-centos7
+      - test-debian9
 
 jobs:
   test-ubuntu18:
@@ -27,6 +26,7 @@ jobs:
       - run: tar -zcvf ubuntu18-featbin.tar.gz featbin
       - store_artifacts:
           path: ubuntu18-featbin.tar.gz
+
   test-ubuntu16:
     docker:
       - image: circleci/buildpack-deps:16.04
@@ -40,6 +40,7 @@ jobs:
       - run: tar -zcvf ubuntu16-featbin.tar.gz featbin
       - store_artifacts:
           path: ubuntu16-featbin.tar.gz
+
   test-debian9:
     docker:
       - image: debian:9
@@ -53,6 +54,7 @@ jobs:
       - run: tar -zcvf debian9-featbin.tar.gz featbin
       - store_artifacts:
           path: debian9-featbin.tar.gz
+
   test-centos7:
     docker:
       - image: centos:7

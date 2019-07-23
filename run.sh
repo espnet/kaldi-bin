@@ -2,7 +2,6 @@
 
 set -eu -o pipefail
 
-dst=$1
 echo "=== build kaldi ==="
 git clone https://github.com/kaldi-asr/kaldi
 (
