@@ -12,12 +12,12 @@ git clone https://github.com/kaldi-asr/kaldi
 	./extras/check_dependencies.sh
 	# ./extras/install_openblas.sh
 	sudo ./extras/install_mkl.sh
-	make -j
+	make -j4
     )
     (
 	cd src
 	./configure --static --use-cuda=no --mathlib=OPENBLAS
-	make -j depend
+	make -j4 depend
     )
 )
 
