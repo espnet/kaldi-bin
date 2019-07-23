@@ -47,7 +47,8 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: apt-get install -qq -y g++ sox unzip bzip2 wget curl sudo
+      - run: apt-get update -qq
+      - run: apt-get install -qq -y g++ sox unzip bzip2 wget curl sudo python3
       - run: ./run.sh
       - run: cp -r ./kaldi/src/featbin .
       - run: rm featbin/*.cc featbin/*.o
