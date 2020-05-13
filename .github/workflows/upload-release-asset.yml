@@ -9,14 +9,28 @@ name: Upload Release Asset
 jobs:
   build:
     name: Upload Release Asset
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install dependencies for Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -qq -y g++ sox
+          # For OpenBlas
+          # sudo apt-get install -qq -y g++ sox liblapacke-dev gfortran
+      - name: run.sh
+        run: |
+          ./run.sh
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          touch a
-          zip --junk-paths my-artifact a
+          cp -r ./kaldi/src/featbin .
+          rm featbin/*.cc featbin/*.o
+          tar -zcvf ${{ matrix.os }}-featbin.tar.gz featbin
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -34,6 +48,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./my-artifact.zip
-          asset_name: my-artifact.zip
-          asset_content_type: application/zip
+          asset_path: ${{ matrix.os }}-featbin.tar.gz
+          asset_name: ${{ matrix.os }}-featbin.tar.gz
+          asset_content_type: application/gzip
