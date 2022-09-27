@@ -3,6 +3,9 @@ on:
     # Sequence of patterns matched against refs/tags
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  pull_request:
+    branches:
+      - master
 
 name: Upload Release Asset
 
@@ -11,8 +14,7 @@ jobs:
     name: Upload Release Asset
     strategy:
       matrix:
-        # os: [ubuntu-latest, windows-latest, macOS-latest]
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
@@ -24,10 +26,12 @@ jobs:
           # For OpenBlas
           # sudo apt-get install -qq -y g++ sox liblapacke-dev gfortran
       - name: run.sh
+        shell: bash
         run: |
           ./run.sh
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
+          fff
           cp -r ./kaldi/src/featbin .
           rm featbin/*.cc featbin/*.o
           tar -zcvf ${{ matrix.os }}-featbin.tar.gz featbin
