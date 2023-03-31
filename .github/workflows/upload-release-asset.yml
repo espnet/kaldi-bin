@@ -1,7 +1,5 @@
 on:
   push:
-  pull_request:
-  workflow_dispatch:
 
 name: Upload Release Asset
 
@@ -11,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,5 +20,6 @@ jobs:
           # For OpenBlas
           # sudo apt-get install -qq -y g++ sox liblapacke-dev gfortran
       - name: run.sh
+        shell: bash
         run: |
           ./run.sh
