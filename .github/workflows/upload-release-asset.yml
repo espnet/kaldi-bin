@@ -46,6 +46,7 @@ jobs:
           yum install -y sox ncurses-devel libtool automake autoconf git subversion
           yum install -y bzip2 wget which unzip bc patch python2
           yum install -y zlib-devel
+          yum install -y sudo
       - name: run.sh
         shell: bash
         run: |
