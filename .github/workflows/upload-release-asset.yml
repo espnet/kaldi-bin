@@ -52,7 +52,7 @@ jobs:
         run: |
           PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh
 
-  test_macos:
+  build_on_macos:
     runs-on: macos-11
     steps:
       - name: Checkout code
@@ -63,8 +63,9 @@ jobs:
           architecture: 'x64'
       - name: Install dependencies
         run: |
-          brew install automake gfortran
+          brew install automake
       - name: run.sh
         shell: bash
         run: |
+          gfortran
           ./run.sh
