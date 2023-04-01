@@ -31,7 +31,6 @@ jobs:
         CC: /opt/rh/devtoolset-7/root/usr/bin/gcc
         CXX: /opt/rh/devtoolset-7/root/usr/bin/g++
         MAKE: /opt/rh/devtoolset-7/root/usr/bin/make
-        PATH: "/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -45,4 +44,4 @@ jobs:
       - name: run.sh
         shell: bash
         run: |
-          ./run.sh
+          PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh
