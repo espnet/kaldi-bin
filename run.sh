@@ -49,7 +49,6 @@ fi
           ./configure --static --use-cuda=no
         fi
         make -j4 depend
-        cd featbin
         make -j4
     )
 )
