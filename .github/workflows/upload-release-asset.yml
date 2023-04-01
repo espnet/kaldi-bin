@@ -35,9 +35,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies for Linux
-        run:
-        　　　　yum-config-manager --enable rhel-server-rhscl-7-rpms
-          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make sox ncurses-devel libtool automake autoconf git centos-release-scl bzip2 wget which unzip bc patch python2
+        run: 　|
+          yum-config-manager --enable rhel-server-rhscl-7-rpms
+          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make
+          yum install sox ncurses-devel libtool automake autoconf git centos-release-scl
+          yum install bzip2 wget which unzip bc patch python2
       - name: run.sh
         shell: bash
         run: |
