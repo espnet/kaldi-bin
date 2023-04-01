@@ -12,7 +12,9 @@ echo "=== build kaldi ==="
     (
          set -eu -o pipefail
          cd tools
+         echo "=== build sctk ==="
          bash ../../install_sctk.sh
+         echo "=== build sph2pie ==="
          bash ../../install_sph2pipe.sh
     )
 
@@ -22,6 +24,7 @@ echo "=== build kaldi ==="
         cd tools
         ./extras/check_dependencies.sh
         # extras/install_openblas.sh
+        echo "=== install mkl ==="
         sudo ./extras/install_mkl.sh
         make -j4
     )
