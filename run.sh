@@ -2,32 +2,53 @@
 
 set -eu -o pipefail
 
-echo "=== build kaldi ==="
+if [ -z ${BUILD_OPENBLAS:-} ]; then
+  build_openblas=false
+else
+  build_openblas=true
+fi
+
 (
     set -eu -o pipefail
 
-    mkdir kaldi
+    git clone --depth=1 https://github.com/kaldi-asr/kaldi
     cd kaldi
-    git init
-    git fetch --depth=1 git://github.com/kaldi-asr/kaldi 29b3265104fc10ce3e06bfacb8f1e7ef9f16e3be
-    git checkout FETCH_HEAD
+    
+    (
+         set -eu -o pipefail
+         cd tools
+         echo "=== build sctk ==="
+         bash ../../install_sctk.sh
+         echo "=== build sph2pie ==="
+         bash ../../install_sph2pipe.sh
+         bash ../../download_openfst.sh
+    )
 
     (
         set -eu -o pipefail
 
         cd tools
         ./extras/check_dependencies.sh
-        # extras/install_openblas.sh
-        sudo ./extras/install_mkl.sh
+        # 
+        if "${build_openblas}"; then
+          echo "=== install openblas ==="
+          extras/install_openblas.sh
+        else
+          echo "=== install mkl ==="
+          sudo ./extras/install_mkl.sh
+        fi
         make -j4
     )
     (
         set -eu -o pipefail
-
+        echo "=== build kaldi ==="
         cd src
-        ./configure --static --use-cuda=no # --mathlib=OPENBLAS
+        if "${build_openblas}"; then
+          ./configure --static --use-cuda=no --mathlib=OPENBLAS
+        else
+          ./configure --static --use-cuda=no
+        fi
         make -j4 depend
-        cd featbin
         make -j4
     )
 )

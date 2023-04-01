@@ -6,31 +6,41 @@ on:
 
 name: Upload Release Asset
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
-    name: Upload Release Asset
-    strategy:
-      matrix:
-        # os: [ubuntu-latest, windows-latest, macOS-latest]
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+  build_on_centos:
+    runs-on: ubuntu-latest
+    container:
+      image: centos:7
+      env:
+        CC: /opt/rh/devtoolset-7/root/usr/bin/gcc
+        CXX: /opt/rh/devtoolset-7/root/usr/bin/g++
+        MAKE: /opt/rh/devtoolset-7/root/usr/bin/make
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies for Linux
-        if: runner.os == 'Linux'
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          architecture: 'x64'
+      - name: Install dependencies
         run: |
-          sudo apt-get install -qq -y g++ sox
-          # For OpenBlas
-          # sudo apt-get install -qq -y g++ sox liblapacke-dev gfortran
+          yum install -y centos-release-scl
+          yum-config-manager --enable rhel-server-rhscl-7-rpms
+          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make devtoolset-7-gcc-gfortran
+          yum install -y sox ncurses-devel libtool automake autoconf git subversion
+          yum install -y bzip2 wget which unzip bc patch python2
+          yum install -y zlib-devel
+          yum install -y sudo
       - name: run.sh
+        shell: bash
         run: |
-          ./run.sh
+          PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          cp -r ./kaldi/src/featbin .
-          rm featbin/*.cc featbin/*.o
-          tar -zcvf ${{ matrix.os }}-featbin.tar.gz featbin
+          rm -r ./kaldi/src/featbin .
+          rm -r kaldi/src/*/*.cc kaldi/src/*/*.o
+          tar -zcvf kaldi-linux-x64-libc2_17.tar.gz kaldi/src
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -48,6 +58,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ${{ matrix.os }}-featbin.tar.gz
-          asset_name: ${{ matrix.os }}-featbin.tar.gz
+          asset_path: kaldi-linux-x64-libc2_17.tar.gz
+          asset_name: kaldi-linux-x64-libc2_17.tar.gz
           asset_content_type: application/gzip
