@@ -8,7 +8,6 @@ else
   build_openblas=true
 fi
 
-echo "=== build kaldi ==="
 (
     set -eu -o pipefail
 
@@ -42,7 +41,7 @@ echo "=== build kaldi ==="
     )
     (
         set -eu -o pipefail
-
+        echo "=== build kaldi ==="
         cd src
         if "${build_openblas}"; then
           ./configure --static --use-cuda=no --mathlib=OPENBLAS
