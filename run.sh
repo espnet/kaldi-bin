@@ -6,11 +6,8 @@ echo "=== build kaldi ==="
 (
     set -eu -o pipefail
 
-    mkdir kaldi
+    git clone --depth=1 https://github.com/kaldi-asr/kaldi
     cd kaldi
-    git init
-    git fetch --depth=1 git://github.com/kaldi-asr/kaldi 29b3265104fc10ce3e06bfacb8f1e7ef9f16e3be
-    git checkout FETCH_HEAD
 
     (
         set -eu -o pipefail
