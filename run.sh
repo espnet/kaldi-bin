@@ -3,9 +3,9 @@
 set -eu -o pipefail
 
 if [ -z ${BUILD_OPENBLAS:-} ]; then
-  build_openblas=true
-else
   build_openblas=false
+else
+  build_openblas=true
 fi
 
 echo "=== build kaldi ==="
