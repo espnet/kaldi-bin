@@ -61,6 +61,9 @@ jobs:
         with:
           python-version: '2.7'
           architecture: 'x64'
+      - name: Install dependencies
+        run: |
+          brew install automake gfortran
       - name: run.sh
         shell: bash
         run: |
