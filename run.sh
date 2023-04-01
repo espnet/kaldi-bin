@@ -12,6 +12,7 @@ echo "=== build kaldi ==="
     (
          set -eu -o pipefail
          cd tools
+         bash ../../install_sctk.sh
          bash ../../install_sph2pipe.sh
     )
 
