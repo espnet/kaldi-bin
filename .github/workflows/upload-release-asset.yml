@@ -38,9 +38,9 @@ jobs:
         run: |
           yum install -y centos-release-scl
           yum-config-manager --enable rhel-server-rhscl-7-rpms
-          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make
-          yum install -y sox ncurses-devel libtool automake autoconf git
-          yum install -y bzip2 wget which unzip bc patch python2
+          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make devtoolset-7-gcc-gfortran
+          yum install -y sox ncurses-devel libtool automake autoconf git subversion
+          yum install -y bzip2 wget which unzip bc patch python2 python3
       - name: run.sh
         shell: bash
         run: |
