@@ -6,10 +6,18 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build_on_ubuntu:
+    runs-on: ubuntu-latest  
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          architecture: 'x64'
+      - name: Install dependencies for Linux
+          sudo apt-get install -qq -y g++ sox
+      - name: run.sh
+        shell: bash
+        run: |
+          ./run.sh
