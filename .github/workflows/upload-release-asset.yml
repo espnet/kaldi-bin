@@ -67,4 +67,4 @@ jobs:
       - name: run.sh
         shell: bash
         run: |
-          PATH=/usr/local/opt/gfortran/bin:${PATH:-} ./run.sh
+          BUILD_OPENBLAS=1 PATH=/usr/local/opt/gfortran/bin:${PATH:-} ./run.sh
