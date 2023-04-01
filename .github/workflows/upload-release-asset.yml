@@ -11,9 +11,3 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Install dependencies for Linux
-          sudo apt-get install -qq -y g++ sox
-      - name: run.sh
-        shell: bash
-        run: |
-          ./run.sh
