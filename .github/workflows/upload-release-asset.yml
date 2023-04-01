@@ -13,12 +13,13 @@ jobs:
         with:
           python-version: '3.10'
           architecture: 'x64'
-      - name: Install dependencies for Linux
+      - name: Install dependencies
           sudo apt-get install -qq -y g++ sox
       - name: run.sh
         shell: bash
         run: |
           ./run.sh
+
   build_on_centos:
     runs-on: ubuntu-latest
     container:
@@ -34,8 +35,9 @@ jobs:
         with:
           python-version: '3.10'
           architecture: 'x64'
-      - name: Install dependencies for Linux
-          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make sox ncurses-devel libtool automake autoconf git centos-release-scl bzip2 wget which unzip bc patch
+      - name: Install dependencies
+          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make sox ncurses-devel libtool automake autoconf
+          yum install git centos-release-scl bzip2 wget which unzip bc patch
       - name: run.sh
         shell: bash
         run: |
