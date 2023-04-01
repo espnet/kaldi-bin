@@ -42,4 +42,5 @@ fi
     make config
     touch .configured
     make all && make install && make doc
+    touch .compiled
 )
