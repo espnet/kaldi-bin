@@ -51,3 +51,17 @@ jobs:
         shell: bash
         run: |
           PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh
+
+  test_macos:
+    runs-on: macos-11
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '2.7'
+          architecture: 'x64'
+      - name: run.sh
+        shell: bash
+        run: |
+          ./run.sh
