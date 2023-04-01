@@ -37,7 +37,8 @@ jobs:
       - name: Run a multi-line script
         run: |
           yum-config-manager --enable rhel-server-rhscl-7-rpms
-          echo test, and deploy your project.
+          yum install -y devtoolset-7-gcc-c++ devtoolset-7-make
+          yum install sox ncurses-devel libtool automake autoconf git centos-release-scl
       - name: Install dependencies for Linux
         run: 　|
           yum-config-manager --enable rhel-server-rhscl-7-rpms
