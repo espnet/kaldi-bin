@@ -40,7 +40,7 @@ jobs:
           yum-config-manager --enable rhel-server-rhscl-7-rpms
           yum install -y devtoolset-7-gcc-c++ devtoolset-7-make
           yum install -y sox ncurses-devel libtool automake autoconf git
-          yum install bzip2 wget which unzip bc patch python2
+          yum install -y bzip2 wget which unzip bc patch python2
       - name: run.sh
         shell: bash
         run: |
