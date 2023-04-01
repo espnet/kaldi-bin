@@ -64,10 +64,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install automake gcc
-          brew --prefix gcc
       - name: run.sh
         shell: bash
         run: |
-          which gcc
-          ls /usr/local/opt/gfortran
-          ./run.sh
+          PATH=/usr/local/opt/gfortran/bin:${PATH:-} ./run.sh
