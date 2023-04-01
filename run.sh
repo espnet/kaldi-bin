@@ -2,6 +2,12 @@
 
 set -eu -o pipefail
 
+if [ -z ${BUILD_OPENBLAS:-} ]; then
+  build_openblas=true
+else
+  build_openblas=false
+fi
+
 echo "=== build kaldi ==="
 (
     set -eu -o pipefail
@@ -24,16 +30,25 @@ echo "=== build kaldi ==="
 
         cd tools
         ./extras/check_dependencies.sh
-        # extras/install_openblas.sh
-        echo "=== install mkl ==="
-        sudo ./extras/install_mkl.sh
+        # 
+        if "${build_openblas}"; then
+          echo "=== install openblas ==="
+          extras/install_openblas.sh
+        else
+          echo "=== install mkl ==="
+          sudo ./extras/install_mkl.sh
+        fi
         make -j4
     )
     (
         set -eu -o pipefail
 
         cd src
-        ./configure --static --use-cuda=no # --mathlib=OPENBLAS
+        if "${build_openblas}"; then
+          ./configure --static --use-cuda=no --mathlib=OPENBLAS
+        else
+          ./configure --static --use-cuda=no
+        fi
         make -j4 depend
         cd featbin
         make -j4
