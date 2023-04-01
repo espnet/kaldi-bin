@@ -4,20 +4,9 @@ on:
 
 name: Upload Release Asset
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build_on_ubuntu:
-    runs-on: ubuntu-latest  
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          architecture: 'x64'
-      - name: Install dependencies
-          sudo apt-get install -qq -y g++ sox
-      - name: run.sh
-        shell: bash
-        run: |
-          ./run.sh
-
+  # This workflow contains a single job called "build"
+  build2:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
