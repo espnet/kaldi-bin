@@ -67,5 +67,6 @@ jobs:
       - name: run.sh
         shell: bash
         run: |
-          ls /usr/local/bin/gfortran
+          which gcc
+          ls /usr/local/bin/gcc
           ./run.sh
