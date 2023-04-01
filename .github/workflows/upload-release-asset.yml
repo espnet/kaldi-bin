@@ -64,6 +64,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install automake gcc
+          brew --prefix gcc
       - name: run.sh
         shell: bash
         run: |
