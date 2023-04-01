@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '2.7'
           architecture: 'x64'
-      - name: Install dependencies for Linux
+      - name: Install dependencies
         run:
           sudo apt-get install -qq -y g++ sox
       - name: run.sh
@@ -34,13 +34,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Run a multi-line script
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          architecture: 'x64'
+      - name: Install dependencies
         run: |
           yum install -y centos-release-scl
           yum-config-manager --enable rhel-server-rhscl-7-rpms
           yum install -y devtoolset-7-gcc-c++ devtoolset-7-make devtoolset-7-gcc-gfortran
           yum install -y sox ncurses-devel libtool automake autoconf git subversion
-          yum install -y bzip2 wget which unzip bc patch python2 python3　zlib-devel
+          yum install -y bzip2 wget which unzip bc patch python2
+          yum install -y zlib-devel
       - name: run.sh
         shell: bash
         run: |
