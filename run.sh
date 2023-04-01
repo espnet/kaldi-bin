@@ -8,6 +8,12 @@ echo "=== build kaldi ==="
 
     git clone --depth=1 https://github.com/kaldi-asr/kaldi
     cd kaldi
+    
+    (
+         set -eu -o pipefail
+         cd tools
+         bash ./install_sph2pipe.sh
+    )
 
     (
         set -eu -o pipefail
