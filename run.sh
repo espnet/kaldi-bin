@@ -16,6 +16,7 @@ echo "=== build kaldi ==="
          bash ../../install_sctk.sh
          echo "=== build sph2pie ==="
          bash ../../install_sph2pipe.sh
+         bash ../../download_openfst.sh
     )
 
     (
