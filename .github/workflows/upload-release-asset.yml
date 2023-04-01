@@ -34,6 +34,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
       - name: Install dependencies for Linux
         run: 　|
           yum-config-manager --enable rhel-server-rhscl-7-rpms
