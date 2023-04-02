@@ -9,14 +9,14 @@ else
 fi
 
 target=$1
+git_hash=$2
 
 
 (
     set -eu -o pipefail
 
-    git clone --depth=1 https://github.com/kaldi-asr/kaldi
+    git clone --depth=1 https://github.com/kaldi-asr/kaldi ${git_hash}
     cd kaldi
-    git_hash=$(git show --format='%h' --no-patch)
     
     (
          set -eu -o pipefail
@@ -56,9 +56,6 @@ target=$1
         cd $target
         make -j4
     )
-       
-    rm -r kaldi/src/$target/*.cc kaldi/src/$target/*.o
-    tar -zcvf kaldi-${git_hash}-${target}-linux-x64-libc2_17.tar.gz kaldi/src/${target}
 
 )
 
