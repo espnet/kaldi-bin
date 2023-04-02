@@ -11,7 +11,7 @@ jobs:
   build_on_centos:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 20
+      max-parallel: 1
       matrix:
         target: [base,bin,chain,chainbin,cudadecoder,cudadecoderbin,cudafeat,cudafeatbin,cudamatrix,decoder,doc,feat,featbin,fgmmbin,fstbin,fstext,gmm,gmmbin,gst-plugin,hmm,itf,ivector,ivectorbin,kws,kwsbin,lat,latbin,lm,lmbin,makefiles,matrix,nnet,nnet2,nnet2bin,nnet3,nnet3bin,nnetbin,online,online2,online2bin,onlinebin,probe,rnnlm,rnnlmbin,sgmm2,sgmm2bin,tfrnnlm,tfrnnlmbin,transform,tree,util]
     container:
