@@ -15,8 +15,12 @@ git_hash=$2
 (
     set -eu -o pipefail
 
-    git clone --depth=1 https://github.com/kaldi-asr/kaldi ${git_hash}
+    mkdir kaldi
     cd kaldi
+    git init
+    git remote add origin https://github.com/kaldi-asr/kaldi
+    git fetch origin ${git_hash}
+    git reset –hard FETCH_HEAD
     
     (
          set -eu -o pipefail
