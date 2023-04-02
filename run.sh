@@ -20,7 +20,7 @@ git_hash=$2
     git init
     git remote add origin https://github.com/kaldi-asr/kaldi
     git fetch origin ${git_hash}
-    git reset –hard FETCH_HEAD
+    git reset --hard FETCH_HEAD
     
     (
          set -eu -o pipefail
