@@ -39,11 +39,11 @@ jobs:
       - name: run.sh
         shell: bash
         run: |
-          PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh ${{ github.ref }}
+          PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh ${{ matrix.target }}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          rm -r kaldi/src/${{ github.ref }}/*.cc kaldi/src/${{ github.ref }}/*.o
-          tar -zcvf kaldi-${{ github.ref }}-linux-x64-libc2_17.tar.gz kaldi/src/${{ github.ref }}
+          rm -r kaldi/src/${{ matrix.target }}/*.cc kaldi/src/${{ matrix.target }}/*.o
+          tar -zcvf kaldi-${{ matrix.target }}-linux-x64-libc2_17.tar.gz kaldi/src/${{ matrix.target }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -61,6 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: kaldi-${{ github.ref }}-linux-x64-libc2_17.tar.gz
-          asset_name: kaldi-${{ github.ref }}-linux-x64-libc2_17.tar.gz
+          asset_path: kaldi-${{ matrix.target }}-linux-x64-libc2_17.tar.gz
+          asset_name: kaldi-${{ matrix.target }}-linux-x64-libc2_17.tar.gz
           asset_content_type: application/gzip
