@@ -52,5 +52,5 @@ jobs:
           PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh ${{ matrix.target }} ${{ matrix.kaldi }}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          rm -r kaldi/src/${{ matrix.target }}/*.cc kaldi/src/${{ matrix.target }}/*.o
+          rm -rf kaldi/src/${{ matrix.target }}/*.cc kaldi/src/${{ matrix.target }}/*.o
           tar -zcvf kaldi-${{ matrix.kaldi }}-${{ matrix.target }}-linux-x64-libc2_17.tar.gz kaldi/src/${{ matrix.target }}
