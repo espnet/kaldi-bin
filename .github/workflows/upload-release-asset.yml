@@ -40,6 +40,7 @@ jobs:
           yum install -y zlib-devel
           yum install -y sudo
       - name: Install portaudio
+        if: ${{ matrix.target }} == online
         run: |
           wget http://portaudio.com/archives/pa_stable_v190600_20161030.tgz
           tar zxvf pa_stable_v190600_20161030.tgz
