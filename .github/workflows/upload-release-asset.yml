@@ -15,7 +15,8 @@ jobs:
       matrix:
         # target: [base,bin,chain,chainbin,cudadecoder,cudadecoderbin,cudafeat,cudafeatbin,cudamatrix,decoder,doc,feat,featbin,fgmmbin,fstbin,fstext,gmm,gmmbin,gst-plugin,hmm,itf,ivector,ivectorbin,kws,kwsbin,lat,latbin,lm,lmbin,makefiles,matrix,nnet,nnet2,nnet2bin,nnet3,nnet3bin,nnetbin,online,online2,online2bin,onlinebin,probe,rnnlm,rnnlmbin,sgmm2,sgmm2bin,tfrnnlm,tfrnnlmbin,transform,tree,util]
         # target: [base,bin,chain,chainbin,decoder,feat,featbin,fgmmbin,fstbin,fstext,gmm,gmmbin,hmm,ivector,ivectorbin,kws,kwsbin] 
-        target: [lat,latbin,lm,lmbin,matrix,nnet,nnet2,nnet2bin,nnet3,nnet3bin,nnetbin,online,online2,online2bin,onlinebin,rnnlm,rnnlmbin,sgmm2,sgmm2bin,tfrnnlm,tfrnnlmbin,transform,tree,util]
+        #target: [lat,latbin,lm,lmbin,matrix,nnet,nnet2,nnet2bin,nnet3,nnet3bin,nnetbin,online,online2,online2bin,onlinebin,rnnlm,rnnlmbin,sgmm2,sgmm2bin,tfrnnlm,tfrnnlmbin,transform,tree,util]
+        target: [bin, chainbin, cudadecoderbin, cudafeatbin, featbin, fgmmbin, fstbin, gmmbin, ivectorbin, kwsbin, latbin, lmbin, nnet2bin, nnet3bin, nnetbin, online2bin, onlinebin, rnnlmbin, sgmm2bin, tfrnnlmbin]
         kaldi: [59299d1cf95b72bb109d583947d9e9ece19aa6dc]
     container:
       image: centos:7
