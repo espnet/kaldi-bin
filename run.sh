@@ -8,6 +8,9 @@ else
   build_openblas=true
 fi
 
+target=$1
+
+
 (
     set -eu -o pipefail
 
@@ -49,6 +52,9 @@ fi
           ./configure --static --use-cuda=no
         fi
         make -j4 depend
+        if [ -n $target ]; then
+          cd $target
+        fi
         make -j4
     )
 )
