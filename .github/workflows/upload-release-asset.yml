@@ -39,9 +39,11 @@ jobs:
           yum install -y bzip2 wget which unzip bc patch python2
           yum install -y zlib-devel
           yum install -y sudo
+      - name: Install portaudio
+        run: |
           wget http://portaudio.com/archives/pa_stable_v190600_20161030.tgz
           tar zxvf pa_stable_v190600_20161030.tgz
-          cd portaudio && ./configure && make && make install
+          cd portaudio && ./configure && PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" make && PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" make install
       - name: run.sh
         shell: bash
         run: |
