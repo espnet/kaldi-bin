@@ -16,6 +16,7 @@ target=$1
 
     git clone --depth=1 https://github.com/kaldi-asr/kaldi
     cd kaldi
+    git_hash=$(git show --format='%h' --no-patch)
     
     (
          set -eu -o pipefail
@@ -52,10 +53,12 @@ target=$1
           ./configure --static --use-cuda=no
         fi
         make -j4 depend
-        if [ -n $target ]; then
-          cd $target
-        fi
+        cd $target
         make -j4
     )
+       
+    rm -r kaldi/src/$target/*.cc kaldi/src/$target/*.o
+    tar -zcvf kaldi-${git_hash}-${target}-linux-x64-libc2_17.tar.gz kaldi/src/${target}
+
 )
 
