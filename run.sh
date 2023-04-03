@@ -9,13 +9,18 @@ else
 fi
 
 target=$1
+git_hash=$2
 
 
 (
     set -eu -o pipefail
 
-    git clone --depth=1 https://github.com/kaldi-asr/kaldi
+    mkdir kaldi
     cd kaldi
+    git init
+    git remote add origin https://github.com/kaldi-asr/kaldi
+    git fetch origin ${git_hash}
+    git reset --hard FETCH_HEAD
     
     (
          set -eu -o pipefail
@@ -24,7 +29,8 @@ target=$1
          bash ../../install_sctk.sh
          echo "=== build sph2pie ==="
          bash ../../install_sph2pipe.sh
-         bash ../../download_openfst.sh
+         bash ../../download_openfst.sh         
+
     )
 
     (
@@ -40,6 +46,10 @@ target=$1
           echo "=== install mkl ==="
           sudo ./extras/install_mkl.sh
         fi
+        echo "=== build portaudio ==="
+        if [ "${target}" = onlinebin ]; then
+          extras/install_portaudio.sh
+        fi
         make -j4
     )
     (
@@ -52,10 +62,9 @@ target=$1
           ./configure --static --use-cuda=no
         fi
         make -j4 depend
-        if [ -n $target ]; then
-          cd $target
-        fi
+        cd $target
         make -j4
     )
+
 )
 

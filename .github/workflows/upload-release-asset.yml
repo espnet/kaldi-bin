@@ -13,7 +13,8 @@ jobs:
     strategy:
       max-parallel: 40
       matrix:
-        target: [base,bin,chain,chainbin,cudadecoder,cudadecoderbin,cudafeat,cudafeatbin,cudamatrix,decoder,doc,feat,featbin,fgmmbin,fstbin,fstext,gmm,gmmbin,gst-plugin,hmm,itf,ivector,ivectorbin,kws,kwsbin,lat,latbin,lm,lmbin,makefiles,matrix,nnet,nnet2,nnet2bin,nnet3,nnet3bin,nnetbin,online,online2,online2bin,onlinebin,probe,rnnlm,rnnlmbin,sgmm2,sgmm2bin,tfrnnlm,tfrnnlmbin,transform,tree,util]
+        target: [bin, chainbin, featbin, fgmmbin, fstbin, gmmbin, ivectorbin, kwsbin, latbin, lmbin, nnet2bin, nnet3bin, nnetbin, online2bin, onlinebin, rnnlmbin, sgmm2bin]
+        kaldi: [59299d1cf95b72bb109d583947d9e9ece19aa6dc]
     container:
       image: centos:7
       env:
@@ -39,11 +40,11 @@ jobs:
       - name: run.sh
         shell: bash
         run: |
-          PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh ${{ matrix.target }}
+          PATH="/opt/rh/devtoolset-7/root/usr/bin:${PATH:-}" ./run.sh ${{ matrix.target }} ${{ matrix.kaldi }}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          rm -r kaldi/src/${{ matrix.target }}/*.cc kaldi/src/${{ matrix.target }}/*.o
-          tar -zcvf kaldi-${{ matrix.target }}-linux-x64-libc2_17.tar.gz kaldi/src/${{ matrix.target }}
+          rm -rf kaldi/src/${{ matrix.target }}/*.cc kaldi/src/${{ matrix.target }}/*.o
+          tar -zcvf kaldi-${{ matrix.kaldi }}-${{ matrix.target }}-linux-x64-libc2_17.tar.gz kaldi/src/${{ matrix.target }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -61,6 +62,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: kaldi-${{ matrix.target }}-linux-x64-libc2_17.tar.gz
-          asset_name: kaldi-${{ matrix.target }}-linux-x64-libc2_17.tar.gz
+          asset_path: kaldi-${{ matrix.kaldi }}-${{ matrix.target }}-linux-x64-libc2_17.tar.gz
+          asset_name: kaldi-${{ matrix.kaldi }}-${{ matrix.target }}-linux-x64-libc2_17.tar.gz
           asset_content_type: application/gzip
