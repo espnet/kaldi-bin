@@ -29,7 +29,8 @@ git_hash=$2
          bash ../../install_sctk.sh
          echo "=== build sph2pie ==="
          bash ../../install_sph2pipe.sh
-         bash ../../download_openfst.sh
+         bash ../../download_openfst.sh         
+
     )
 
     (
@@ -44,6 +45,10 @@ git_hash=$2
         else
           echo "=== install mkl ==="
           sudo ./extras/install_mkl.sh
+        fi
+        echo "=== build portaudio ==="
+        if [ "${target}" = onlinebin ]; then
+          extras/install_portaudio.sh
         fi
         make -j4
     )
