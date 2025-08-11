@@ -21,7 +21,7 @@ git_hash=$2
     git remote add origin https://github.com/kaldi-asr/kaldi
     git fetch origin ${git_hash}
     git reset --hard FETCH_HEAD
-    
+
     (
          set -eu -o pipefail
          cd tools
@@ -29,7 +29,7 @@ git_hash=$2
          bash ../../install_sctk.sh
          echo "=== build sph2pie ==="
          bash ../../install_sph2pipe.sh
-         bash ../../download_openfst.sh         
+         bash ../../download_openfst.sh
 
     )
 
@@ -38,7 +38,7 @@ git_hash=$2
 
         cd tools
         ./extras/check_dependencies.sh
-        # 
+        #
         if "${build_openblas}"; then
           echo "=== install openblas ==="
           extras/install_openblas.sh
@@ -67,4 +67,3 @@ git_hash=$2
     )
 
 )
-
